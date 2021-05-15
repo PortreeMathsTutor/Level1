@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WhenTargetIsTriggered : MonoBehaviour
+{
+    public AudioClip yea;
+    public GameObject[] newTarget;
+    public static int score;
+    private int i = 0;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            score=score+1;
+            AudioSource.PlayClipAtPoint(yea, transform.position);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+          //  score = score + 1;
+            transform.position = newTarget[i].transform.position;
+            if (i < newTarget.Length - 1) { i = i + 1; }
+            else { i = 0; }
+        }
+    }
+}
