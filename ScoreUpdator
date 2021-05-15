@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+public class ScoreUpdator : MonoBehaviour
+{
+    public int score; // in the other script the variable coins will 
+                 // be defined          public static int coins;
+    public int highScoreInt = 0;
+    public TextMeshProUGUI highScore;
+    public TextMeshProUGUI scores;
+
+    private void Start()
+    {
+   
+        score = 0;
+        highScore.text = "HIGHSCORE " + PlayerPrefs.GetInt("highScoreint").ToString();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+      
+        score = WhenTargetIsTriggered.score+EnemyFollow.deathScore+ IfPlayerFalls.fallPenelty; // We need to access the score value that is stored in a different script
+        scores.text = "SCORE " + score.ToString("0");
+        if (score > PlayerPrefs.GetInt("highScoreint", 0))
+        {
+            PlayerPrefs.SetInt("highScoreint", score);
+            highScore.text = "HIGHSCORE " + score.ToString();
+        }
+    }
+}
