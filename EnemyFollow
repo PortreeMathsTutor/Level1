@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class EnemyFollow : MonoBehaviour
+{
+    public Transform[] newStartPosition;
+    public static int deathScore;
+    public GameObject myTarget;
+    public NavMeshAgent myAgent;
+    public int range;
+    private int i;
+    bool doThisOnce=true;
+    public AudioClip oNo;
+    private void Start()
+    {
+        i = 0;
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        float dist = Vector3.Distance(this.transform.position, myTarget.transform.position);
+        if (dist>2) { doThisOnce = true; }
+        if (dist<range)
+        {
+            myAgent.destination = myTarget.transform.position;
+        }
+        if (dist < 2)
+        {
+            if (doThisOnce)
+            {
+                AudioSource.PlayClipAtPoint(oNo, transform.position);
+                deathScore -= 10;
+               transform.position = newStartPosition[i].position;
+                if (i < newStartPosition.Length - 1) { i = i + 1; }
+                else { i = 0; }
+                doThisOnce = false;
+            }
+
+        }
+    }
+}
